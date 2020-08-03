@@ -1,13 +1,56 @@
 import React, { Component } from 'react';
+import CounterButton from './CounterButton';
 import './Counter.css'
 
-function Counter(){
-    return (
-        <div className="counter">
-            <button>+1</button>
-            <span className="count">0</span>
-        </div>
-    )
+class Counter extends Component {
+
+    //Define the initial state in a constructor
+    //state => counter 0 
+    constructor() {
+        super(); //Common error
+        this.state = {
+            counter: 0
+        }
+
+        this.increment = this.increment.bind(this);
+        this.decrement = this.decrement.bind(this);
+        this.reset = this.reset.bind(this);
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <CounterButton incrementMethod={this.increment} decrementMethod={this.decrement} />
+                <CounterButton by={5} incrementMethod={this.increment} decrementMethod={this.decrement} />
+                <CounterButton by={10} incrementMethod={this.increment} decrementMethod={this.decrement} />
+                <span className="count">{this.state.counter}</span>
+                <div>
+                    <button className="reset" onClick={this.reset}>Reset</button>
+                </div>
+
+            </div>
+        );
+    }
+
+    reset() {
+        this.setState({ counter: 0 });
+    }
+
+    increment(by) {
+        this.setState(
+            (prevState) => {
+                return { counter: prevState.counter + by }
+            }
+        );
+    }
+
+    decrement(by) {
+        this.setState(
+            (prevState) => {
+                return { counter: prevState.counter - by }
+            }
+        );
+    }
 }
 
 export default Counter;
